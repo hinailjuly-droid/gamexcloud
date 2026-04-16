@@ -71,8 +71,13 @@ app.use((err, req, res, next) => {
 const start = async () => {
   try {
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pixelvault');
-    console.log('✅ MongoDB connected');
+    console.log('📡 Attempting to connect to MongoDB...');
+    if (!process.env.MONGODB_URI) {
+      console.error('❌ MONGODB_URI is missing from environment variables!');
+      process.exit(1);
+    }
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('✅ MongoDB connected successfully');
 
     // Connect to Redis (optional, non-blocking)
     connectRedis();
