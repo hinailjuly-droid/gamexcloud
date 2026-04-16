@@ -3,22 +3,28 @@ const fs = require('fs');
 
 const LOCAL_URI = 'mongodb://127.0.0.1:27017/pixelvault';
 
-async function exportLocal() {
-    console.log("💾 Exporting local games to JSON...");
+async function exportFull() {
+    console.log("💾 Exporting full database (Games + Blogs + Stats) to JSON...");
     let conn;
     try {
         conn = await mongoose.createConnection(LOCAL_URI).asPromise();
-        const GameModel = conn.model('Game', new mongoose.Schema({}, { strict: false }));
-        const games = await GameModel.find({}).lean();
-        
-        // Remove _id from games to prevent conflicts
-        const cleanGames = games.map(g => {
-            const { _id, ...rest } = g;
-            return rest;
-        });
+        const db = conn.db;
 
-        fs.writeFileSync('games-backup.json', JSON.stringify(cleanGames, null, 2));
-        console.log(`✅ Successfully exported ${cleanGames.length} games to games-backup.json`);
+        const data = {
+            games: await db.collection('games').find({}).toArray(),
+            blogposts: await db.collection('blogposts').find({}).toArray(),
+            analytics: await db.collection('analytics').find({}).toArray()
+        };
+        
+        // Clean up _ids to prevent duplicate key errors on fresh import if needed, 
+        // but keeping them usually preserves relations better if they aren't changing.
+        // We'll keep them for consistency between Local/Prod.
+
+        fs.writeFileSync('full-site-backup.json', JSON.stringify(data, null, 2));
+        console.log(`✅ EXPORT SUCCESS!`);
+        console.log(`   - Games: ${data.games.length}`);
+        console.log(`   - Blogs: ${data.blogposts.length}`);
+        console.log(`   - Stats: ${data.analytics.length}`);
     } catch (err) {
         console.error("❌ Export failed:", err);
     } finally {
@@ -27,4 +33,4 @@ async function exportLocal() {
     }
 }
 
-exportLocal();
+exportFull();

@@ -4,8 +4,8 @@ const path = require('path');
 
 const PROD_URI = process.env.MONGODB_URI;
 
-async function importProd() {
-    console.log("🚀 Starting Production Restore from Backup JSON...");
+async function importFull() {
+    console.log("🚀 Starting FULL PRODUCTION RESTORE (Games + Blogs + Stats)...");
     
     if (!PROD_URI) {
         console.error("❌ MONGODB_URI is missing from environment!");
@@ -14,33 +14,39 @@ async function importProd() {
 
     let conn;
     try {
-        const backupPath = path.join(__dirname, '../games-backup.json');
+        const backupPath = path.join(__dirname, '../full-site-backup.json');
         if (!fs.existsSync(backupPath)) {
-            console.error("❌ games-backup.json not found!");
+            console.error("❌ full-site-backup.json not found!");
             process.exit(1);
         }
 
-        const games = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
-        console.log(`📦 Loaded ${games.length} games from backup.`);
+        const data = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
+        console.log(`📦 Loaded backup: ${data.games.length} games, ${data.blogposts.length} blogs, ${data.analytics.length} stats.`);
 
         conn = await mongoose.createConnection(PROD_URI).asPromise();
         console.log("✅ Production Atlas Connected");
 
-        const GameModel = conn.model('Game', new mongoose.Schema({}, { strict: false }));
+        const wipeAndRestore = async (collectionName, items) => {
+            console.log(`🧹 Wiping production [${collectionName}]...`);
+            await conn.db.collection(collectionName).deleteMany({});
+            
+            if (items.length > 0) {
+                console.log(`📤 Restoring ${items.length} items to [${collectionName}]...`);
+                // Use insertMany in batches
+                const batchSize = 100;
+                for (let i = 0; i < items.length; i += batchSize) {
+                    const batch = items.slice(i, i + batchSize);
+                    await conn.db.collection(collectionName).insertMany(batch);
+                }
+                console.log(`✅ [${collectionName}] restored.`);
+            }
+        };
 
-        console.log("🧹 Wiping current production data...");
-        await GameModel.deleteMany({});
-        console.log("✅ Data cleared.");
+        await wipeAndRestore('games', data.games);
+        await wipeAndRestore('blogposts', data.blogposts);
+        await wipeAndRestore('analytics', data.analytics);
 
-        console.log("📤 Restoring original curated games...");
-        const batchSize = 100;
-        for (let i = 0; i < games.length; i += batchSize) {
-            const batch = games.slice(i, i + batchSize);
-            await GameModel.insertMany(batch);
-            console.log(`🚀 Restored ${i + batch.length}/${games.length}...`);
-        }
-
-        console.log("🏁 RESTORATION COMPLETE!");
+        console.log("🏁 FULL RESTORATION COMPLETE! Refresh your site now.");
     } catch (err) {
         console.error("❌ Restore failed:", err);
     } finally {
@@ -49,4 +55,4 @@ async function importProd() {
     }
 }
 
-importProd();
+importFull();
