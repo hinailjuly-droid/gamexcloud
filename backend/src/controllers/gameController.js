@@ -22,7 +22,7 @@ const getGames = async (req, res) => {
   try {
     const { page = 1, limit = 24, category, sort = 'stars', search, language, license } = req.query;
     const pageNum = Math.max(1, parseInt(page));
-    const limitNum = Math.min(100, Math.max(1, parseInt(limit)));
+    const limitNum = Math.min(2000, Math.max(1, parseInt(limit)));
     const skip = (pageNum - 1) * limitNum;
 
     const cacheKey = `games:${pageNum}:${limitNum}:${category || ''}:${sort}:${search || ''}:${language || ''}:${license || ''}`;
@@ -169,7 +169,7 @@ const searchGames = async (req, res) => {
     }
 
     const pageNum = Math.max(1, parseInt(page));
-    const limitNum = Math.min(100, Math.max(1, parseInt(limit)));
+    const limitNum = Math.min(2000, Math.max(1, parseInt(limit)));
     const skip = (pageNum - 1) * limitNum;
 
     const query = {

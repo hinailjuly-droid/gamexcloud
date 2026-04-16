@@ -9,7 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Implementation of a 5-second timeout to prevent build hangs
   let gameEntries: MetadataRoute.Sitemap = [];
   try {
-    const data = await gamesApi.getGames({ limit: 1000, sort: 'newest' });
+    const data = await gamesApi.getGames({ limit: 2000, sort: 'newest' });
     
     gameEntries = (data?.games || []).map((game: any) => ({
       url: `${baseUrl}/game/${game.slug}`,
@@ -25,7 +25,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '',
     '/games',
     '/featured',
-    '/trending',
     '/about',
     '/contact',
     '/privacy-policy',
