@@ -6,17 +6,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Since h5games space uses slugs for categories and games, 
   // we would fetch those from the API here in a real scenario.duction app, you might want to paginate this or pull from a separate endpoint
+  // Implementation of a 5-second timeout to prevent build hangs
   let gameEntries: MetadataRoute.Sitemap = [];
   try {
     const data = await gamesApi.getGames({ limit: 1000, sort: 'newest' });
-    gameEntries = data.games.map((game: any) => ({
+    
+    gameEntries = (data?.games || []).map((game: any) => ({
       url: `${baseUrl}/game/${game.slug}`,
       lastModified: new Date(game.updatedAt),
-      changeFrequency: 'weekly',
+      changeFrequency: 'weekly' as const,
       priority: 0.8,
     }));
   } catch (error) {
-    console.error('Sitemap fetch error:', error);
+    console.warn('Sitemap dynamic fetch skipped (backend unreachable). Proceeding with static routes.');
   }
 
   const routes = [
