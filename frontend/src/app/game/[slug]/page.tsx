@@ -37,7 +37,16 @@ export default function GameDetailPage() {
     if (game?._id) {
       viewMutation.mutate(game._id);
     }
-  }, [game?._id]);
+
+    // Trigger H5 Interstitial Ad for Beta
+    if (typeof window !== 'undefined' && (window as any).adBreak) {
+      console.log('🎬 Triggering H5 adBreak...');
+      (window as any).adBreak({
+        type: 'start',
+        name: 'game-start',
+      });
+    }
+  }, [game?._id, slug]);
 
   if (isLoading) return <div className="container mx-auto px-4 py-20 text-center text-white">Loading...</div>;
   if (error || !game) return <div className="container mx-auto px-4 py-20 text-center text-white">Game not found</div>;
@@ -221,11 +230,11 @@ export default function GameDetailPage() {
             "name": game.title,
             "description": game.description,
             "genre": game.category,
-            "url": `https://pixelvault.com/game/${game.slug}`,
+            "url": `https://gamxcloud.xyz/game/${game.slug}`,
             "image": game.thumbnail,
             "author": {
               "@type": "Organization",
-              "name": "PixelVault Authors"
+              "name": "GamxCloud Authors"
             },
             "aggregateRating": {
               "@type": "AggregateRating",
