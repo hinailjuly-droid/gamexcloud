@@ -1,7 +1,7 @@
 {
-  "name": "pixelvault-backend",
+  "name": "gamxcloud-backend",
   "version": "1.0.0",
-  "description": "PixelVault HTML5 Games Portal - Backend API",
+  "description": "GamxCloud HTML5 Games Portal - Backend API",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
