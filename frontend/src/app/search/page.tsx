@@ -67,7 +67,7 @@ function SearchPageContent() {
         <div className="flex flex-col items-center justify-center py-20 bg-primary-light/20 rounded-[3rem] border border-dashed border-white/5">
            <SearchIcon size={64} className="text-gray-800 mb-6" />
            <h3 className="text-2xl font-bold text-gray-600 uppercase italic">Type something to begin</h3>
-           <p className="text-gray-700 mt-2 font-medium">Find your next favorite game in the h5games space database.</p>
+           <p className="text-gray-700 mt-2 font-medium">Find your next favorite game in the GamxCloud database.</p>
         </div>
       ) : (
         <GameGrid games={data?.games || []} isLoading={isLoading} />

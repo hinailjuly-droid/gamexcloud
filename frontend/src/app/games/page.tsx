@@ -8,7 +8,6 @@ import GameGrid from "@/components/games/GameGrid";
 import GameFilters from "@/components/games/GameFilters";
 import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import Button from "@/components/ui/Button";
-import AdSlot from "@/components/ads/AdSlot";
 
 function GamesPageContent() {
   const searchParams = useSearchParams();
@@ -53,8 +52,7 @@ function GamesPageContent() {
               isLoading={isLoading} 
             />
 
-            {/* AdSlot - List Inline */}
-            <AdSlot position="list_inline" />
+            {/* AdSlot removed */}
 
             {/* Pagination */}
             {data && data.pagination.pages > 1 && (

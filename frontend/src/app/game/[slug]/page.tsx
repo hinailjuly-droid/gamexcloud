@@ -10,7 +10,6 @@ import GameGrid from "@/components/games/GameGrid";
 import GamePlayer from "@/components/games/GamePlayer";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
-import AdSlot from "@/components/ads/AdSlot";
 import { Star, Eye, Play, Code2, Share2, ChevronRight, LayoutGrid, Calendar, Quote } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -54,7 +53,7 @@ export default function GameDetailPage() {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: `${game.title} on h5games space`,
+        title: `${game.title} on GamxCloud`,
         text: `Play ${game.title} - Free HTML5 Game`,
         url: window.location.href,
       });
@@ -122,8 +121,7 @@ export default function GameDetailPage() {
               />
             </div>
 
-            {/* AdSlot - Below Game */}
-            <AdSlot position="game_bottom" />
+            {/* Game details below */}
 
             {/* Game Details Section */}
             <div className="bg-primary-light border border-white/5 rounded-[2rem] p-8 md:p-12">
@@ -180,8 +178,7 @@ export default function GameDetailPage() {
             
             <Newsletter />
 
-            {/* AdSlot - Sidebar */}
-            <AdSlot position="game_sidebar" />
+            {/* AdSlot removed for Auto-Ads */}
 
             {/* Related Games */}
             <div>

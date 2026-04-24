@@ -8,7 +8,6 @@ import { gamesApi } from "@/lib/api";
 import GameGrid from "@/components/games/GameGrid";
 import GameCard from "@/components/games/GameCard";
 import Button from "@/components/ui/Button";
-import AdSlot from "@/components/ads/AdSlot";
 import { Game, Category, BlogPost } from "@/types";
 import { blogApi } from "@/lib/api";
 import BlogCard from "@/components/BlogCard";
@@ -95,7 +94,7 @@ export default function HomePage() {
               100% Free HTML5 Games
             </Badge>
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white mb-8 tracking-tighter leading-tight italic uppercase">
-              H5GAMES<span className="text-accent underline decoration-white/10"> SPACE</span>
+              GAMX<span className="text-accent underline decoration-white/10">CLOUD</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
               Play 1000+ Premium Web Games Directly In Your Browser. <br className="hidden md:block" />
@@ -126,8 +125,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* AdSlot - Home Hero */}
-      <AdSlot position="home_hero" className="container mx-auto px-4" />
+      {/* Hero Section End */}
 
       {/* Featured Games Section */}
       <section className="container mx-auto px-4">
@@ -248,7 +246,7 @@ export default function HomePage() {
         <div className="flex items-end justify-between mb-12">
           <div>
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase italic">
-              Latest from <span className="text-accent underline decoration-white/10">h5games space</span>
+              Latest from <span className="text-accent underline decoration-white/10">GamxCloud</span>
             </h2>
           </div>
           <Link href="/blog" className="text-accent font-black uppercase text-sm tracking-widest hover:text-white transition-colors flex items-center gap-2 group">
@@ -263,8 +261,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* AdSlot - Home Bottom */}
-      <AdSlot position="home_section" />
+      {/* Blog Preview Section End */}
 
       {/* Newsletter / CTA Section */}
       <section className="container mx-auto px-4 mb-20">

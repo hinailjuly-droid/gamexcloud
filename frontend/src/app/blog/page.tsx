@@ -42,7 +42,7 @@ export default function BlogListingPage() {
             animate={{ opacity: 1, scale: 1 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/20 border border-accent/20 text-accent text-xs font-black uppercase italic mb-8"
           >
-            h5games space blog
+            GamxCloud blog
           </motion.div>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white italic uppercase tracking-tighter mb-8 max-w-5xl mx-auto leading-none">
             Level up your <span className="text-accent underline decoration-white/10">knowledge</span>
