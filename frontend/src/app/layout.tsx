@@ -6,9 +6,9 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "H5GAMES SPACE | Play 1000+ Free Browser Games - No Login Required",
-  description: "Browse and play premium HTML5 games for free on H5GAMES SPACE. Full-screen experience, zero downloads, and mobile friendly. The ultimate open-source games portal.",
-  keywords: "h5games space, h5 games space, h5games, free browser games, open source games, play online, arcade games",
+  title: "GAMXCLOUD | Play 1000+ Free Browser Games - No Login Required",
+  description: "Browse and play premium HTML5 games for free on GAMXCLOUD. Full-screen experience, zero downloads, and mobile friendly. The ultimate open-source games portal.",
+  keywords: "gamxcloud, gamx cloud, h5games, free browser games, open source games, play online, arcade games",
   verification: {
     google: "klhefXtPtglnAChIv7xhLIMBSsdlXOQxO3dlcrckAcI",
   },

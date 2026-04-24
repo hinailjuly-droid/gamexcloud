@@ -16,7 +16,7 @@ export default function Footer() {
                 <Gamepad2 className="text-white" size={18} />
               </div>
               <span className="text-xl font-black tracking-tight text-white uppercase italic">
-            h5games<span className="text-accent underline decoration-white/10"> space</span>
+            gamx<span className="text-accent underline decoration-white/10">cloud</span>
           </span>
             </Link>
             <p className="text-gray-500 text-sm leading-relaxed mb-6">
@@ -69,7 +69,7 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-gray-600 text-xs font-medium uppercase tracking-widest">
-            © {currentYear} H5Games Space | All Rights Reserved
+            © {currentYear} GamxCloud | All Rights Reserved
           </p>
         </div>
       </div>

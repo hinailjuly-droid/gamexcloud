@@ -9,7 +9,7 @@ export default function PrivacyPolicy() {
         <section>
           <h2 className="text-2xl font-bold text-white mb-6 uppercase italic">Introduction</h2>
           <p>
-            At h5games space, we take your privacy seriously. This Privacy Policy describes how we collect, use, and protect your information when you visit our website. Our primary goal is to provide a safe and transparent gaming environment.
+            At GamxCloud, we take your privacy seriously. This Privacy Policy describes how we collect, use, and protect your information when you visit our website. Our primary goal is to provide a safe and transparent gaming environment.
           </p>
         </section>
 
@@ -17,10 +17,10 @@ export default function PrivacyPolicy() {
           <h2 className="text-2xl font-bold text-white mb-6 uppercase italic">Google AdSense Disclosure</h2>
           <div className="bg-accent/5 border border-accent/10 p-6 rounded-2xl text-gray-300">
             <p className="mb-4">
-              h5games space uses Google AdSense and third-party advertising companies to serve ads when you visit our website. These companies may use cookies and web beacons to collect information (not including your name, address, email address, or telephone number) about your visits to this and other websites in order to provide advertisements about goods and services of interest to you.
+              GamxCloud uses Google AdSense and third-party advertising companies to serve ads when you visit our website. These companies may use cookies and web beacons to collect information (not including your name, address, email address, or telephone number) about your visits to this and other websites in order to provide advertisements about goods and services of interest to you.
             </p>
             <ul className="list-disc pl-6 space-y-2 text-sm italic">
-              <li>Google, as a third-party vendor, uses cookies to serve ads on h5games space.</li>
+              <li>Google, as a third-party vendor, uses cookies to serve ads on GamxCloud.</li>
               <li>Google's use of the DART cookie enables it to serve ads to our users based on their visit to our sites and other sites on the Internet.</li>
               <li>Users may opt out of the use of the DART cookie by visiting the Google ad and content network privacy policy.</li>
             </ul>
@@ -30,7 +30,7 @@ export default function PrivacyPolicy() {
         <section>
           <h2 className="text-2xl font-bold text-white mb-6 uppercase italic">Data We DO NOT Collect</h2>
           <p>
-            Because h5games space does not require registration or login, we do not collect:
+            Because GamxCloud does not require registration or login, we do not collect:
           </p>
           <ul className="list-disc pl-6 mt-4 space-y-2">
             <li>Your Name</li>
@@ -50,7 +50,7 @@ export default function PrivacyPolicy() {
         <section>
           <h2 className="text-2xl font-bold text-white mb-6 uppercase italic">Contact Us</h2>
           <p>
-            If you have any questions about this Privacy Policy, please contact us at support@h5games.space.
+            If you have any questions about this Privacy Policy, please contact us at support@gamxcloud.xyz.
           </p>
         </section>
       </div>

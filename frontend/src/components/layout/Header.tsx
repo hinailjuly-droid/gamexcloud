@@ -38,7 +38,7 @@ export default function Header() {
             <Gamepad2 className="text-white" size={24} />
           </div>
           <span className="text-xl font-black tracking-tight text-white uppercase italic">
-            h5games<span className="text-accent underline decoration-white/10"> space</span>
+            gamx<span className="text-accent underline decoration-white/10">cloud</span>
           </span>
         </Link>
 

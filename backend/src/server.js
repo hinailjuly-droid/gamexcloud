@@ -25,8 +25,8 @@ app.use(helmet({
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL || 'http://localhost:3000',
-    'https://h5games.space',
-    'https://www.h5games.space'
+    'https://gamxcloud.xyz',
+    'https://www.gamxcloud.xyz'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
@@ -87,7 +87,7 @@ const start = async () => {
     connectRedis();
 
     app.listen(PORT, () => {
-      console.log(`🚀 h5games space API server running on port ${PORT}`);
+      console.log(`🚀 GamxCloud API server running on port ${PORT}`);
       console.log(`📡 Environment: ${process.env.NODE_ENV || 'development'}`);
     });
   } catch (error) {
