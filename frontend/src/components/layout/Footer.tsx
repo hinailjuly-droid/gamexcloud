@@ -71,7 +71,11 @@ export default function Footer() {
           <p className="text-gray-600 text-xs font-medium uppercase tracking-widest">
             © {currentYear} GamxCloud | All Rights Reserved
           </p>
+          <div className="text-[10px] text-gray-700 uppercase tracking-widest font-bold">
+            free online gaming no login
+          </div>
         </div>
+
       </div>
     </footer>
   );
