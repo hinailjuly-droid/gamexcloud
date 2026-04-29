@@ -21,25 +21,28 @@ export default function PokiGameCard({ game, size = 'normal' }: PokiGameCardProp
 
   return (
     <motion.div
-      whileHover={{ y: 4, scale: 0.98 }}
-      className={`relative group ${sizeClasses[size]} bg-white rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-[0_8px_0_0_rgba(0,0,0,0.1)] hover:shadow-none transition-all duration-200 border-4 border-transparent hover:border-white cursor-pointer`}
+      whileHover={{ y: 2, scale: 0.98 }}
+      className={`relative group ${sizeClasses[size]} bg-white dark:bg-primary-light rounded-[1rem] md:rounded-[1.5rem] overflow-hidden shadow-[0_4px_0_0_rgba(0,0,0,0.1)] hover:shadow-none transition-all duration-200 border-2 border-transparent hover:border-white dark:hover:border-accent cursor-pointer`}
     >
       <Link href={`/game/${game.slug}`} className="block w-full h-full">
-        <div className="relative w-full h-full aspect-square">
+        <div className="relative w-full h-full aspect-square bg-gray-100 dark:bg-gray-800">
           <Image
             src={game.thumbnail && (game.thumbnail.startsWith('http') || game.thumbnail.startsWith('/')) ? game.thumbnail : fallbackImage}
             alt={game.title}
             fill
-            className="object-cover"
-            sizes={size === 'large' ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes={size === 'large' ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 33vw, 20vw"}
             priority={size === 'large'}
           />
           
           {/* Overlay on Hover */}
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-             <div className="bg-accent text-black font-black px-4 py-2 rounded-xl text-sm md:text-base transform -rotate-2">
-                PLAY NOW
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 text-center">
+             <div className="bg-accent text-black font-black px-3 py-1.5 rounded-lg text-xs md:text-sm transform -rotate-1 mb-2">
+                PLAY
              </div>
+             <span className="text-white text-[10px] md:text-xs font-black uppercase line-clamp-1">
+               {game.title}
+             </span>
           </div>
         </div>
       </Link>
