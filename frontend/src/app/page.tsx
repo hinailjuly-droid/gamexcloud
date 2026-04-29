@@ -1,102 +1,157 @@
+"use client";
+
+import { Suspense } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 import { gamesApi } from "@/lib/api";
-import PokiGameCard from "@/components/games/PokiGameCard";
-import { Game, Category } from "@/types";
+import GameGrid from "@/components/games/GameGrid";
+import GameFilters from "@/components/games/GameFilters";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { Search } from "lucide-react";
 
-export const dynamic = 'force-dynamic';
+function HomePageContent() {
+  const searchParams = useSearchParams();
+  
+  const page = parseInt(searchParams.get('page') || '1');
+  const category = searchParams.get('category') || '';
+  const sort = searchParams.get('sort') || 'stars';
+  const search = searchParams.get('search') || '';
 
-export default async function HomePage() {
-  // Fetch data on the server
-  const [featuredGames, trendingGames, popularGames, categories] = await Promise.all([
-    gamesApi.getFeaturedGames().catch(() => []),
-    gamesApi.getTrendingGames().catch(() => []),
-    gamesApi.getPopularGames().catch(() => []),
-    gamesApi.getCategories().catch(() => []),
-  ]);
-
-  const allGames = [...featuredGames.slice(0, 12), ...trendingGames, ...popularGames].slice(0, 60);
+  const { data, isLoading } = useQuery({
+    queryKey: ['games', { page, category, sort, search }],
+    queryFn: () => gamesApi.getGames({ page, category, sort, search, limit: 40 }),
+  });
 
   return (
-    <div className="flex flex-col gap-4 md:gap-8 pb-20 pt-4 px-4 md:px-8 max-w-[1600px] mx-auto">
-      {/* Search Bar - Compact instead of full Hero */}
-      <section className="flex flex-col md:flex-row items-center justify-between gap-4 py-4 border-b border-black/10 dark:border-white/10">
-        <div>
-          <h1 className="text-2xl md:text-4xl font-black text-black dark:text-white uppercase tracking-tighter">
-            BROWSE <span className="text-accent">GAMES</span>
-          </h1>
-          <p className="text-sm font-bold text-black/50 dark:text-white/50 uppercase">
-            {allGames.length}+ Premium titles available now
-          </p>
-        </div>
-        <div className="w-full md:w-auto">
-          <Link href="/search">
-            <button className="btn-poki w-full justify-center py-2 px-6 text-lg">
-              <Search size={20} /> SEARCH
-            </button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Categories Horizontal Scroll */}
-      <section className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-        {categories?.map((cat: Category) => (
-          <Link 
-            key={cat.slug} 
-            href={`/category/${cat.name.toLowerCase()}`}
-            className="flex-shrink-0 bg-white dark:bg-primary-light px-4 py-2 rounded-xl font-black text-[10px] md:text-xs border-b-4 border-black/10 text-black dark:text-white hover:border-transparent hover:translate-y-0.5 transition-all"
-          >
-            {cat.name.toUpperCase()}
-          </Link>
-        ))}
-      </section>
-
-      {/* Main Dense Grid - Start directly with games */}
-      <section className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2 md:gap-3 grid-flow-dense">
-        {/* Large Featured Tiles */}
-        {allGames[0] && <PokiGameCard game={allGames[0]} size="large" />}
-        {allGames[1] && <PokiGameCard game={allGames[1]} size="normal" />}
-        {allGames[2] && <PokiGameCard game={allGames[2]} size="normal" />}
-        
-        {/* Mixed Tiles */}
-        {allGames.slice(3, 15).map((game: Game, idx: number) => {
-          let size: 'normal' | 'large' | 'wide' = 'normal';
-          if (idx === 5) size = 'large';
-          else if (idx === 2 || idx === 8) size = 'wide';
-          
-          return (
-            <PokiGameCard key={game._id} game={game} size={size} />
-          );
-        })}
-
-        {/* Remaining Tiles */}
-        {allGames.slice(15).map((game: Game) => (
-          <PokiGameCard key={game._id} game={game} />
-        ))}
-      </section>
-
-      {/* SEO Section at Bottom */}
-      <section className="mt-16">
-         <div className="bg-black/5 dark:bg-white/5 rounded-[2rem] p-8 md:p-12 border-2 border-dashed border-black/10 dark:border-white/10 text-center">
-            <h2 className="text-2xl md:text-4xl font-black mb-4 uppercase italic text-black dark:text-white leading-tight">The Ultimate Free Gaming Portal</h2>
-            <p className="text-sm md:text-base font-bold text-black/60 dark:text-white/60 max-w-4xl mx-auto leading-relaxed">
-              Play <span className="text-black dark:text-white underline font-black">free online gaming no login</span> on GamxCloud. 
-              Our optimized platform delivers high-performance HTML5 games directly to your browser. 
-              No downloads, no logins, just pure fun.
+    <div className="container mx-auto px-4 py-10">
+      <div className="flex flex-col gap-10">
+        {/* Compact Header for Home */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 dark:border-white/10 pb-6">
+          <div>
+            <h1 className="text-3xl md:text-5xl font-black text-black dark:text-white italic uppercase mb-2">
+              BROWSE <span className="text-accent underline decoration-white/10">GAMES</span>
+            </h1>
+            <p className="text-gray-500 font-medium tracking-tight uppercase text-sm">
+              {data ? `${data.pagination.total} free online gaming no login titles` : 'Exploring the vault...'}
             </p>
-         </div>
-      </section>
+          </div>
+        </div>
 
-      {/* Keywords footer section */}
-      <div className="flex flex-wrap justify-center gap-4 text-[10px] md:text-xs font-bold text-black/30 dark:text-white/30 uppercase tracking-widest mt-6">
-        <span>free online gaming no login</span>
-        <span>•</span>
-        <span>no download games</span>
-        <span>•</span>
-        <span>instant play games</span>
-        <span>•</span>
-        <span>h5 games cloud</span>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+          {/* Sidebar Filters */}
+          <aside className="lg:col-span-1">
+            <div className="sticky top-32">
+              <GameFilters />
+            </div>
+          </aside>
+
+          {/* Main Content */}
+          <div className="lg:col-span-3">
+            <GameGrid 
+              games={data?.games || []} 
+              isLoading={isLoading} 
+            />
+
+            {/* Pagination */}
+            {data && data.pagination.pages > 1 && (
+              <div className="mt-16 flex items-center justify-center gap-2">
+                <Pagination 
+                  currentPage={page} 
+                  totalPages={data.pagination.pages} 
+                  searchParams={searchParams} 
+                />
+              </div>
+            )}
+
+            {/* SEO Section at Bottom */}
+            <section className="mt-20">
+               <div className="bg-black/5 dark:bg-white/5 rounded-[2rem] p-10 border-2 border-dashed border-black/10 dark:border-white/10 text-center">
+                  <h2 className="text-2xl md:text-4xl font-black mb-4 uppercase italic text-black dark:text-white">The Ultimate Free Gaming Portal</h2>
+                  <p className="text-base md:text-lg font-bold text-black/60 dark:text-white/60 max-w-4xl mx-auto leading-relaxed">
+                    Play <span className="text-black dark:text-white underline font-black">free online gaming no login</span> on GamxCloud. 
+                    Our optimized platform delivers high-performance HTML5 games directly to your browser. 
+                    No downloads, no logins, just pure fun.
+                  </p>
+               </div>
+            </section>
+
+            {/* Keywords footer section */}
+            <div className="flex flex-wrap justify-center gap-4 text-[10px] md:text-xs font-bold text-black/30 dark:text-white/30 uppercase tracking-widest mt-10">
+              <span>free online gaming no login</span>
+              <span>•</span>
+              <span>no download games</span>
+              <span>•</span>
+              <span>instant play games</span>
+              <span>•</span>
+              <span>h5 games cloud</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
+}
+
+function Pagination({ currentPage, totalPages, searchParams }: any) {
+  const router = typeof window !== 'undefined' ? require('next/navigation').useRouter() : null;
+  const pathname = typeof window !== 'undefined' ? require('next/navigation').usePathname() : '';
+
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', newPage.toString());
+    router.push(`${pathname}?${params.toString()}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const pages = [];
+  const startPage = Math.max(1, currentPage - 2);
+  const endPage = Math.min(totalPages, currentPage + 2);
+
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
+
+  return (
+    <div className="flex items-center gap-3">
+      <button
+        disabled={currentPage === 1}
+        onClick={() => handlePageChange(currentPage - 1)}
+        className="w-10 h-10 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-primary-light flex items-center justify-center text-gray-400 hover:text-black dark:hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed group"
+      >
+        <ChevronLeft size={20} className="group-hover:-translate-x-0.5 transition-transform" />
+      </button>
+      
+      <div className="flex items-center gap-2">
+        {pages.map((p) => (
+          <button
+            key={p}
+            onClick={() => handlePageChange(p)}
+            className={`w-10 h-10 rounded-xl text-sm font-black transition-all ${
+              currentPage === p 
+                ? 'bg-accent text-black shadow-lg ring-1 ring-white/20' 
+                : 'text-gray-500 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 border border-transparent'
+            }`}
+          >
+            {p}
+          </button>
+        ))}
+      </div>
+
+      <button
+        disabled={currentPage === totalPages}
+        onClick={() => handlePageChange(currentPage + 1)}
+        className="w-10 h-10 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-primary-light flex items-center justify-center text-gray-400 hover:text-black dark:hover:text-white transition-all disabled:opacity-30 disabled:cursor-not-allowed group"
+      >
+        <ChevronRight size={20} className="group-hover:translate-x-0.5 transition-transform" />
+      </button>
+    </div>
+  );
+}
+
+export default function HomePage() { 
+  return ( 
+    <Suspense fallback={<div className='min-h-screen flex items-center justify-center text-black/20 dark:text-white/20 italic font-black uppercase tracking-tighter'>Loading GamxCloud...</div>}>
+      <HomePageContent />
+    </Suspense> 
+  ); 
 }

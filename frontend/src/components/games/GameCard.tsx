@@ -33,9 +33,10 @@ export default function GameCard({ game }: GameCardProps) {
       className="group relative bg-primary-light rounded-xl overflow-hidden border border-white/5 hover:border-accent/30 transition-all duration-300"
     >
       <Link href={`/game/${game.slug}`}>
-        <div className="relative aspect-[16/10] overflow-hidden">
+        <div className="relative aspect-square overflow-hidden bg-primary-lighter">
           {/* Thumbnail Image with Category Fallback */}
-          <div className="absolute inset-0 bg-primary-lighter">
+          <div className="absolute inset-0">
+
             <Image
               src={game.thumbnail && (game.thumbnail.startsWith('http') || game.thumbnail.startsWith('/')) ? game.thumbnail : fallbackImage}
               alt={game.title}
