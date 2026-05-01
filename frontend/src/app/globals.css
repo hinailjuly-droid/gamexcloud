@@ -1,28 +1,16 @@
-@import "tailwindcss";
-
-@theme {
-  --color-primary: #0D1117;
-  --color-primary-light: #161B22;
-  --color-primary-lighter: #21262D;
-  
-  --color-accent: #ffda00;
-  --color-accent-dark: #e6c400;
-  --color-accent-light: #ffe54d;
-  
-  --color-success: #2ecc71;
-  
-  --animate-float: float 3s ease-in-out infinite;
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 13, 17, 23;
   --background-end-rgb: 0, 0, 0;
+  
+  --color-primary: #0D1117;
+  --color-primary-light: #161B22;
+  --color-primary-lighter: #21262D;
+  --color-accent: #ffda00;
 }
 
 .light {
@@ -67,17 +55,13 @@ body::before {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-primary);
+  background: #0D1117;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #ffda00;
   border-radius: 5px;
-  border: 2px solid var(--color-primary);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #e6c400;
+  border: 2px solid #0D1117;
 }
 
 @layer components {
@@ -86,6 +70,6 @@ body::before {
   }
 
   .btn-poki {
-    @apply bg-accent text-black px-8 py-3 rounded-2xl font-black text-xl shadow-[0_6px_0_0_#e6c400] hover:shadow-none hover:translate-y-1 transition-all active:scale-95 flex items-center gap-2;
+    @apply bg-[#ffda00] text-black px-8 py-3 rounded-2xl font-black text-xl shadow-[0_6px_0_0_#e6c400] hover:shadow-none hover:translate-y-1 transition-all active:scale-95 flex items-center gap-2;
   }
 }
