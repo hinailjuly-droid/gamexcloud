@@ -1,6 +1,7 @@
 import { Game } from "@/types";
 import GameCard from "./GameCard";
 import { motion } from "framer-motion";
+import AdSlot from "../ads/AdSlot";
 
 interface GameGridProps {
   games: Game[];
@@ -30,15 +31,28 @@ export default function GameGrid({ games, isLoading }: GameGridProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {games.map((game, index) => (
-        <motion.div
-          key={game._id}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: index * 0.05 }}
-          viewport={{ once: true }}
-        >
-          <GameCard game={game} />
-        </motion.div>
+        <div key={game._id} className="contents">
+          {/* Insert Native Ad every 8 games */}
+          {index > 0 && index % 8 === 0 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="sm:col-span-1"
+            >
+              <AdSlot position="native" className="h-full" />
+            </motion.div>
+          )}
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: (index % 8) * 0.05 }}
+            viewport={{ once: true }}
+          >
+            <GameCard game={game} />
+          </motion.div>
+        </div>
       ))}
     </div>
   );
