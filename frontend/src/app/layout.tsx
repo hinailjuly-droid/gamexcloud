@@ -22,22 +22,21 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
-        <script
-          async
-          data-ad-client="ca-pub-2724749520266558"
-          data-ad-frequency-hint="30s"
+      </head>
+      <body>
+        <Script
+          id="adsense-init"
+          strategy="afterInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2724749520266558"
           crossOrigin="anonymous"
-        ></script>
-        <script dangerouslySetInnerHTML={{
-          __html: `
+        />
+        <Script id="adsense-config" strategy="afterInteractive">
+          {`
             window.adsbygoogle = window.adsbygoogle || [];
             window.adConfig = function(o) {adsbygoogle.push({google_ad_modality: 'interstitial', ...o});};
             window.adBreak = function(o) {adsbygoogle.push(o);};
-          `
-        }} />
-      </head>
-      <body>
+          `}
+        </Script>
         <Providers>
           <div className="flex flex-col min-h-screen">
             <Header />
