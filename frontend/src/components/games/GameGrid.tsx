@@ -32,17 +32,7 @@ export default function GameGrid({ games, isLoading }: GameGridProps) {
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {games.map((game, index) => (
         <div key={game._id} className="contents">
-          {/* Insert Native Ad every 8 games */}
-          {index > 0 && index % 8 === 0 && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="sm:col-span-1"
-            >
-              <AdSlot position="native" className="h-full" />
-            </motion.div>
-          )}
+
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
