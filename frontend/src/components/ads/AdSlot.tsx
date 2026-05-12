@@ -48,12 +48,20 @@ export default function AdSlot({ position, className = "", sticky }: AdSlotProps
 
   const slotId = slotIds[position];
   const isMultiplex = position === "native" || position === "multiplex";
+  
+  // Optimization: Tell Google the specific shape to help it find ads faster
+  const getAdFormat = () => {
+    if (isMultiplex) return "autorelaxed";
+    if (position.includes("skyscraper")) return "vertical";
+    if (position === "game_bottom" || position === "home_hero") return "horizontal";
+    return "auto";
+  };
 
   const sizes = {
-    home_hero: "w-full min-h-[90px]",
+    home_hero: "w-full min-h-[90px] mb-8",
     home_section: "w-full min-h-[250px] my-12",
     game_sidebar: "w-full min-h-[600px]",
-    game_bottom: "w-full min-h-[90px] my-8", 
+    game_bottom: "w-full min-h-[90px] mt-8 mb-12", 
     list_inline: "w-full min-h-[150px] my-6",
     native: "w-full min-h-[250px]", 
     skyscraper_left: "w-[300px] min-h-[600px] hidden xl:block", 
@@ -64,7 +72,7 @@ export default function AdSlot({ position, className = "", sticky }: AdSlotProps
   return (
     <div
       key={`${pathname}-${position}`}
-      className={`relative bg-black/5 border border-white/5 rounded-xl flex flex-col items-center justify-center overflow-hidden ${sizes[position]} ${className} ${sticky ? 'sticky top-24' : ''}`}
+      className={`relative bg-black/10 border border-white/5 rounded-xl flex flex-col items-center justify-center overflow-hidden ${sizes[position]} ${className} ${sticky ? 'sticky top-24' : ''}`}
     >
       <div className="absolute top-2 left-2 text-[8px] text-white/20 uppercase font-bold z-10">
         Advertisement
@@ -75,9 +83,10 @@ export default function AdSlot({ position, className = "", sticky }: AdSlotProps
         style={{ display: "block", width: "100%", height: "100%" }}
         data-ad-client={pubId}
         data-ad-slot={slotId}
-        data-ad-format={isMultiplex ? "autorelaxed" : "auto"}
+        data-ad-format={getAdFormat()}
         data-full-width-responsive="true"
       ></ins>
     </div>
   );
 }
+

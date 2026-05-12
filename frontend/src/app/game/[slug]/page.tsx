@@ -127,9 +127,6 @@ export default function GameDetailPage() {
                 />
               </div>
 
-              {/* High CTR Under-Game Banner */}
-              <AdSlot position="game_bottom" className="w-full" />
-
               {/* Game Details Section */}
               <div className="bg-primary-light border border-white/5 rounded-[2rem] p-8 md:p-12">
                 <div className="flex items-center gap-4 mb-8">
@@ -185,7 +182,7 @@ export default function GameDetailPage() {
               
               <Newsletter />
 
-              <AdSlot position="game_sidebar" sticky />
+
             </div>
           </div>
         </div>

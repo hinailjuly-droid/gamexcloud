@@ -22,14 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
-      </head>
-      <body>
-        <Script
-          id="adsense-init"
-          strategy="afterInteractive"
+        <script
+          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2724749520266558"
           crossOrigin="anonymous"
-        />
+        ></script>
+      </head>
+      <body>
         <Script id="adsense-config" strategy="afterInteractive">
           {`
             window.adsbygoogle = window.adsbygoogle || [];
